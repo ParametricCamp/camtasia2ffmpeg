@@ -4,29 +4,20 @@ import time
 import os
 import argparse
 
-# Load Camtasia project file
-
 FPS = 30
-
-# fileName = input("Camtasia File Name?")
-# file = open(fileName+".tscproj")
-# data = json.load(file)
 
 # Parse the arguments
 # See https://docs.python.org/3.3/library/argparse.html
 parser = argparse.ArgumentParser(description='Apply lossless trimming/editing to a .mp4 file using a Camtasia project file. NOTE: all original assets must be on the same path they were when creating the Camtasia edits.')
-
 parser.add_argument('file', type=argparse.FileType('r'),
                    help='the source Camtasia file to read')
 args = parser.parse_args()
-# print(args.file.name)
-# print(os.path.splitext(args.file.name)[0])
 
 
+# Load Camtasia project file
 # Read the file into a json object
 
-source_filename = os.path.splitext(args.file.name)[0]
-fileName = source_filename
+fileName = os.path.splitext(args.file.name)[0]
 file = args.file
 data = json.load(file)
 
