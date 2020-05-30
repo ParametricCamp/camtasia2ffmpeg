@@ -85,7 +85,7 @@ f.close()
 ffmpegCommands = ['ffmpeg -ss ' + str(m) + ' -i ' + '"' + str(n) + '.mp4"' + ' -t ' + str(o) + ' -avoid_negative_ts make_zero -c copy -y "' + str(p) + '"'       
                   for m,n,o,p in zip(startSeconds,rawFile,durationSeconds,playList)]
 
-ffmpegCommands.append ('ffmpeg -f concat -safe 0 -i "' + playlistFile + '" -c copy "' + fileName + 'Edited.mp4"')
+ffmpegCommands.append ('ffmpeg -f concat -safe 0 -i "' + playlistFile + '" -c copy "' + fileName + '.mp4"')
                 
 ffmpegCommands.append ('del "' + fileName + '-*.mp4"')
 
