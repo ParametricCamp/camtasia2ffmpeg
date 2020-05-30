@@ -2,16 +2,36 @@
 import json
 import time
 import os
+import argparse
 
 # Load Camtasia project file
 
 FPS = 30
 
-fileName = input("Camtasia File Name?")
-file = open(fileName+".tscproj")
+# fileName = input("Camtasia File Name?")
+# file = open(fileName+".tscproj")
+# data = json.load(file)
+
+# Parse the arguments
+# See https://docs.python.org/3.3/library/argparse.html
+parser = argparse.ArgumentParser(description='Apply lossless trimming/editing to a .mp4 file using a Camtasia project file. NOTE: all original assets must be on the same path they were when creating the Camtasia edits.')
+
+parser.add_argument('file', type=argparse.FileType('r'),
+                   help='the source Camtasia file to read')
+args = parser.parse_args()
+# print(args.file.name)
+# print(os.path.splitext(args.file.name)[0])
+
+
+# Read the file into a json object
+
+source_filename = os.path.splitext(args.file.name)[0]
+fileName = source_filename
+file = args.file
 data = json.load(file)
 
-# extract Start and Duration frames from .tscproj data
+
+# Extract Start and Duration frames from .tscproj data
 
 startFrames = []
 durationFrames = []
@@ -71,14 +91,14 @@ f.close()
 
 # Generate Commands for ffmpeg
 
-ffmpegCommands = ['ffmpeg -ss ' + str(m) + ' -i ' + '"' + str(n) + '.mp4"' + ' -t ' + str(o) + ' -avoid_negative_ts make_zero -c copy -y ' + str(p)       
+ffmpegCommands = ['ffmpeg -ss ' + str(m) + ' -i ' + '"' + str(n) + '.mp4"' + ' -t ' + str(o) + ' -avoid_negative_ts make_zero -c copy -y "' + str(p) + '"'       
                   for m,n,o,p in zip(startSeconds,rawFile,durationSeconds,playList)]
 
-ffmpegCommands.append ('ffmpeg -f concat -safe 0 -i ' + playlistFile + ' -c copy ' + fileName + "Edited.mp4")
+ffmpegCommands.append ('ffmpeg -f concat -safe 0 -i "' + playlistFile + '" -c copy "' + fileName + 'Edited.mp4"')
                 
-ffmpegCommands.append ('del ' + fileName + "-*.mp4")
+ffmpegCommands.append ('del "' + fileName + '-*.mp4"')
 
-ffmpegCommands.append ('del ' + playlistFile)
+ffmpegCommands.append ('del "' + playlistFile + '"')
 
 f= open(fileName+"-ffmpeg.txt","w+")
 
