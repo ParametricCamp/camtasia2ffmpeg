@@ -9,5 +9,7 @@ python .\camtasia2ffmpeg.py '.\Introduction to Parametric Modeling.tscproj'
 
 NOTE: all original assets must be on the same path they were when creating the Camtasia edits.
 
+More detailed instructions can be found [here](docs/Guide.md).
+
 ### Credits
 Credit goes to the one and only [@RamyAydarous](https://github.com/RamyAydarous) 🕺🐍
