@@ -16,11 +16,15 @@ args = parser.parse_args()
 
 # Load Camtasia project file
 # Read the file into a json object
-
 fileName = os.path.splitext(args.file.name)[0]
 file = args.file
 data = json.load(file)
 
+# Save a copy of the Camtasia project in v18
+data['version'] = "2.0"
+data['authoringClientName']['version'] = "18.0"
+with open(fileName + '_v18.tscproj', 'w') as outfile:
+    json.dump(data, outfile)
 
 # Extract Start and Duration frames from .tscproj data
 
