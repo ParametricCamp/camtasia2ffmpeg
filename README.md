@@ -12,4 +12,4 @@ NOTE: all original assets must be on the same path they were when creating the C
 More detailed instructions can be found [here](docs/Guide.md).
 
 ### Credits
-Credit goes to the one and only [@RamyAydarous](https://github.com/RamyAydarous) 🕺🐍
+Credit goes to the one and only [@RamyAydarous](https://github.com/RamyAydarous) 🕺🐍, with contributions from [Arastookhajehee](https://github.com/Arastookhajehee)!
