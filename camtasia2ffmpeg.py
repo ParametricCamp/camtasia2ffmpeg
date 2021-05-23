@@ -4,8 +4,6 @@ import time
 import os
 import argparse
 
-FPS = 30
-
 # Parse the arguments
 # See https://docs.python.org/3.3/library/argparse.html
 parser = argparse.ArgumentParser(description='Apply lossless trimming/editing to a .mp4 file using a Camtasia project file. NOTE: all original assets must be on the same path they were when creating the Camtasia edits.')
@@ -26,8 +24,13 @@ data['authoringClientName']['version'] = "18.0"
 with open(fileName + '_v18.tscproj', 'w') as outfile:
     json.dump(data, outfile)
 
-# Extract Start and Duration frames from .tscproj data
+# Extract video framerate from Project file
+# TODO: framerate should actually be fetched from each clip individually,
+# however since concat will fail anyway if videos don't have the exact same props,
+# let's assume the Camtasia project file has the FPS matching the input videos
+FPS = data["editRate"]
 
+# Extract Start and Duration frames from .tscproj data
 startFrames = []
 durationFrames = []
 rawFile = []
@@ -48,7 +51,7 @@ for i in range(len(startFrames)):
     endSeconds.append ( (durationFrames[i] + startFrames[i]) / FPS )
     durationSeconds.append (durationFrames[i] / FPS)
 
-# Get Timstamps of segments start from durations and write to file
+# Get Timestamps of segments start from durations and write to file
 
 stampFrames = [durationFrames[0]]
 
